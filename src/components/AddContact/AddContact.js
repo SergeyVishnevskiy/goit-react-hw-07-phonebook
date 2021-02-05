@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 import PropTypes from "prop-types";
 import styles from "./AddContact.module.css";
 import { useSelector, useDispatch } from "react-redux";
-import { userAdd } from "../../redux/actions/itemsAction";
+import { postUserOperation } from "../../redux/operation/itemsOperation";
 
 const Phonebook = ({ setShowAlert }) => {
   const [name, setName] = useState("");
@@ -37,12 +36,8 @@ const Phonebook = ({ setShowAlert }) => {
       return;
     }
 
-    dispatch(userAdd({ name, number, id: uuidv4() }));
-
-    localStorage.setItem(
-      "localContacts",
-      JSON.stringify([...contacts, { name, number, id: uuidv4() }])
-    );
+    const user = { name: name, number: number };
+    dispatch(postUserOperation(user));
     setName("");
     setNumber("");
   };

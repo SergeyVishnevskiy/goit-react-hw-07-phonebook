@@ -6,7 +6,7 @@ import FilterContacts from "./components/FilterContacts/FilterContacts";
 import Alert from "./components/Alert/Alert";
 import { CSSTransition } from "react-transition-group";
 import { useSelector, useDispatch } from "react-redux";
-import { userAdd } from "./redux/actions/itemsAction";
+import { getUserOperation } from "./redux/operation/itemsOperation";
 
 function App() {
   const [showAlert, setShowAlert] = useState({ status: false, text: "" });
@@ -16,11 +16,7 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!localStorage.getItem("localContacts")) {
-      localStorage.setItem("localContacts", JSON.stringify([]));
-    }
-    const users = JSON.parse(localStorage.getItem("localContacts"));
-    users.map((user) => dispatch(userAdd(user)));
+    dispatch(getUserOperation());
   }, [dispatch]);
 
   return (

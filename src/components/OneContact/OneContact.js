@@ -1,16 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styles from "./OneContact.module.css";
-import { userDelete } from "../../redux/actions/itemsAction";
 import { useDispatch } from "react-redux";
+import { deleteUserOption } from "../../redux/operation/itemsOperation";
 
 const OneContact = ({ name, number, id }) => {
   const dispatch = useDispatch();
-  const handleUserDelete = (id) => {
-    dispatch(userDelete(id));
-    const localArr = JSON.parse(localStorage.getItem("localContacts"));
-    const newArr = localArr.filter((item) => item.id !== id);
-    localStorage.setItem("localContacts", JSON.stringify(newArr));
+  const userDeleteHandle = (id) => {
+    dispatch(deleteUserOption(id));
   };
 
   return (
@@ -19,7 +16,7 @@ const OneContact = ({ name, number, id }) => {
       <p className={styles.contactNumber}>{number}</p>
       <button
         className={styles.deleteButton}
-        onClick={() => handleUserDelete(id)}
+        onClick={() => userDeleteHandle(id)}
       >
         Delete
       </button>

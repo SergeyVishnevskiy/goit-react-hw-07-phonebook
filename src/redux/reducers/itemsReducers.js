@@ -1,7 +1,8 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { userAdd, userDelete } from "../actions/itemsAction";
+import { usersGet, userAdd, userDelete } from "../actions/itemsAction";
 
 export default createReducer([], {
+  [usersGet]: (state, action) => action.payload,
   [userAdd]: (state, action) => [...state, action.payload],
   [userDelete]: (state, action) =>
     state.filter((item) => item.id !== action.payload),
