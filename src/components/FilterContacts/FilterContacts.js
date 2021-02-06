@@ -1,20 +1,26 @@
 import React from "react";
 import styles from "./FilterConatcts.module.css";
-import { useDispatch } from "react-redux";
-import { filterEdit } from "../../redux/actions/filterAction";
+import { useSelector, useDispatch } from "react-redux";
+import { getFilter } from "../../redux/selectors/phonebookSelector";
+import { setFilter } from "../../redux/actions/phonebookActions";
 
 const FilterContacts = () => {
+  const value = useSelector(getFilter);
   const dispatch = useDispatch();
-  const editFilter = ({ target }) => {
-    dispatch(filterEdit(target.value.toLowerCase()));
+
+  const changeHandler = (event) => {
+    const { value } = event.target;
+    dispatch(setFilter(value));
   };
+
   return (
     <div className={styles.wrapper}>
       <p className={styles.inputName}>Find contacts by name</p>
       <input
         type="text"
+        value={value}
         placeholder="Enter name"
-        onChange={editFilter}
+        onChange={changeHandler}
         className={styles.filter}
       ></input>
     </div>
