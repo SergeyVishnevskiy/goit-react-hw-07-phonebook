@@ -8,7 +8,7 @@ import {
   removeContactSuccess,
   removeContactError,
   setFilter,
-} from "../actions/phonebookActions";
+} from "../actions/actions";
 
 const items = createReducer([], {
   [addContactSuccess]: (state, action) => [...state, action.payload],

@@ -6,7 +6,7 @@ import FilterContacts from "./components/FilterContacts/FilterContacts";
 import Alert from "./components/Alert/Alert";
 import { CSSTransition } from "react-transition-group";
 import { useSelector } from "react-redux";
-import { getContacts, getError } from "./redux/selectors/phonebookSelector";
+import { getContacts, getError } from "./redux/selectors/contacts-selectors";
 
 function App() {
   const contacts = useSelector(getContacts);

@@ -1,9 +1,9 @@
 import React from "react";
 import OneContact from "../OneContact/OneContact";
 import { useSelector, useDispatch } from "react-redux";
-import { setFilter } from "../../redux/actions/phonebookActions";
-import { removeContact } from "../../redux/operation/phonebookOperations";
-import { getVisibleContacts } from "../../redux/selectors/phonebookSelector";
+import { setFilter } from "../../redux/actions/actions";
+import { removeContact } from "../../redux/operation/operations";
+import { getVisibleContacts } from "../../redux/selectors/contacts-selectors";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import "./AllContacts.css";
 

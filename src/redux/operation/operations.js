@@ -9,7 +9,7 @@ import {
   removeContactRequest,
   removeContactSuccess,
   removeContactError,
-} from "../actions/phonebookActions";
+} from "../actions/actions";
 
 axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
 

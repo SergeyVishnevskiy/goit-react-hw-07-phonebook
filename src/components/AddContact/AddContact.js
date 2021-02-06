@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styles from "./AddContact.module.css";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  addContact,
-  fetchContacts,
-} from "../../redux/operation/phonebookOperations";
-import { getContacts } from "../../redux/selectors/phonebookSelector";
+import { addContact, fetchContacts } from "../../redux/operation/operations";
+import { getContacts } from "../../redux/selectors/contacts-selectors";
 import { CSSTransition } from "react-transition-group";
 import Alert from "../Alert/Alert";
 
