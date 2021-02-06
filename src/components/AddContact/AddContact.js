@@ -21,10 +21,10 @@ const Phonebook = () => {
   const contacts = useSelector(getContacts);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(fetchContacts());
-    // eslint-disable-next-line
-  }, []);
+  // useEffect(() => {
+  //   dispatch(fetchContacts());
+  //   // eslint-disable-next-line
+  // }, []);
 
   const changeHandler = (e) => {
     const { name, value } = e.target;
@@ -39,6 +39,13 @@ const Phonebook = () => {
         ...prevState,
         alert: true,
         alertMessage: "Please enter name and number!",
+      }));
+    }
+    if (name.length < 2 || number.length < 2) {
+      return setState((prevState) => ({
+        ...prevState,
+        alert: true,
+        alertMessage: "Please enter correct name and number!",
       }));
     }
 

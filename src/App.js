@@ -4,7 +4,6 @@ import AddContact from "./components/AddContact/AddContact";
 import AllContacts from "./components/AllContacts/AllContacts";
 import FilterContacts from "./components/FilterContacts/FilterContacts";
 import Alert from "./components/Alert/Alert";
-import Loader from "./components/Loader/Loader";
 import { CSSTransition } from "react-transition-group";
 import { useSelector } from "react-redux";
 import {
@@ -41,7 +40,7 @@ function App() {
         <FilterContacts />
       </CSSTransition>
 
-      {loading && <Loader />}
+      {loading && <h3>loading</h3>}
       <AllContacts />
       {!contacts.length && !loading(<p>No contacts!</p>)}
       {error && <Alert message={error.message} />}
