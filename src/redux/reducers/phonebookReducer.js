@@ -1,13 +1,10 @@
 import { combineReducers } from "redux";
 import { createReducer } from "@reduxjs/toolkit";
 import {
-  addContactRequest,
   addContactSuccess,
   addContactError,
-  fetchContactsRequest,
   fetchContactsSuccess,
   fetchContactsError,
-  removeContactRequest,
   removeContactSuccess,
   removeContactError,
   setFilter,
@@ -22,17 +19,7 @@ const items = createReducer([], {
 const filter = createReducer("", {
   [setFilter]: (_, action) => action.payload,
 });
-const loading = createReducer(false, {
-  [addContactRequest]: () => true,
-  [addContactSuccess]: () => false,
-  [addContactError]: () => false,
-  [fetchContactsRequest]: () => true,
-  [fetchContactsSuccess]: () => false,
-  [fetchContactsError]: () => false,
-  [removeContactRequest]: () => true,
-  [removeContactSuccess]: () => false,
-  [removeContactError]: () => false,
-});
+
 const error = createReducer(null, {
   [addContactError]: (_, action) => action.payload,
   [addContactSuccess]: () => null,
@@ -45,7 +32,6 @@ const error = createReducer(null, {
 const phonebookReducer = combineReducers({
   items,
   filter,
-  loading,
   error,
 });
 

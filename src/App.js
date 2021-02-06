@@ -6,15 +6,10 @@ import FilterContacts from "./components/FilterContacts/FilterContacts";
 import Alert from "./components/Alert/Alert";
 import { CSSTransition } from "react-transition-group";
 import { useSelector } from "react-redux";
-import {
-  getContacts,
-  getError,
-  getLoading,
-} from "./redux/selectors/phonebookSelector";
+import { getContacts, getError } from "./redux/selectors/phonebookSelector";
 
 function App() {
   const contacts = useSelector(getContacts);
-  const loading = useSelector(getLoading);
   const error = useSelector(getError);
 
   return (
@@ -40,9 +35,8 @@ function App() {
         <FilterContacts />
       </CSSTransition>
 
-      {loading && <h3>loading</h3>}
       <AllContacts />
-      {!contacts.length && !loading(<p>No contacts!</p>)}
+
       {error && <Alert message={error.message} />}
     </div>
   );

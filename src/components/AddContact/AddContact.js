@@ -1,5 +1,4 @@
-/* eslint-disable no-undef */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./AddContact.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -21,10 +20,10 @@ const Phonebook = () => {
   const contacts = useSelector(getContacts);
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(fetchContacts());
-  //   // eslint-disable-next-line
-  // }, []);
+  useEffect(() => {
+    dispatch(fetchContacts());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const changeHandler = (e) => {
     const { name, value } = e.target;
