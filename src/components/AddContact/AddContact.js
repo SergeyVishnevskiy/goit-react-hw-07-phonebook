@@ -1,74 +1,94 @@
+/* eslint-disable no-undef */
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 import styles from "./AddContact.module.css";
 import { useSelector, useDispatch } from "react-redux";
-import { postUserOperation } from "../../redux/operation/itemsOperation";
+import {
+  addContact,
+  fetchContacts,
+} from "../../redux/operation/phonebookOperations";
+import { getContacts } from "../../redux/selectors/phonebookSelector";
+import { CSSTransition } from "react-transition-group";
+import Alert from "../Alert/Alert";
 
-const Phonebook = ({ setShowAlert }) => {
-  const [name, setName] = useState("");
-  const [number, setNumber] = useState("");
+const initState = {
+  name: "",
+  number: "",
+  alert: false,
+};
 
-  const contacts = useSelector((state) => state.items);
+const Phonebook = () => {
+  const [state, setState] = useState({ ...initState });
+  const contacts = useSelector(getContacts);
   const dispatch = useDispatch();
 
-  const inputName = ({ target }) => {
-    setName(target.value);
-  };
-  const inputNumber = ({ target }) => {
-    setNumber(target.value);
-  };
+  useEffect(() => {
+    dispatch(fetchContacts());
+    // eslint-disable-next-line
+  }, []);
 
+  const changeHandler = (e) => {
+    const { name, value } = e.target;
+    setState((prevState) => ({ ...prevState, [name]: value }));
+  };
   const submitHandler = (e) => {
     e.preventDefault();
+    const { name, number } = state;
 
-    if (contacts.find((contact) => contact.name === name)) {
-      setShowAlert({ status: true, text: "Contact already exist" });
-      setTimeout(() => {
-        setShowAlert({ status: false, text: "" });
-      }, 2000);
-      return;
-    }
-    if (name.length < 2) {
-      setShowAlert({ status: true, text: "Name mast content 2 characters" });
-      setTimeout(() => {
-        setShowAlert({ status: false, text: "" });
-      }, 2000);
-      return;
+    if (!name || !number) {
+      return setState((prevState) => ({
+        ...prevState,
+        alert: true,
+        alertMessage: "Please enter name and number!",
+      }));
     }
 
-    const user = { name: name, number: number };
-    dispatch(postUserOperation(user));
-    setName("");
-    setNumber("");
+    contacts.some((cont) => cont.name.toLowerCase() === name.toLowerCase())
+      ? setState((prevState) => ({
+          ...prevState,
+          alert: true,
+          alertMessage: `${name} is already in contacts!`,
+        }))
+      : dispatch(addContact({ name, number }));
+
+    setState((prevState) => ({ ...prevState, name: "", number: "" }));
   };
 
   return (
-    <form className={styles.form} autoComplete="off" onSubmit={submitHandler}>
-      <input
-        className={styles.inputName}
-        type="text"
-        name="name"
-        placeholder="Full Name"
-        value={name}
-        onChange={inputName}
-      ></input>
-      <input
-        className={styles.inputNumber}
-        type="text"
-        name="number"
-        placeholder="Nubmer xxx-xx-xx"
-        value={number}
-        onChange={inputNumber}
-      ></input>
-      <button type="submit" className={styles.buttonAddContacts}>
-        Add contacts?
-      </button>
-    </form>
+    <>
+      <form className={styles.form} autoComplete="off" onSubmit={submitHandler}>
+        <input
+          className={styles.inputName}
+          type="text"
+          name="name"
+          placeholder="Full Name"
+          value={state.name}
+          onChange={changeHandler}
+        ></input>
+        <input
+          className={styles.inputNumber}
+          type="text"
+          name="number"
+          placeholder="Nubmer xxx-xx-xx"
+          value={state.number}
+          onChange={changeHandler}
+        ></input>
+        <button type="submit" className={styles.buttonAddContacts}>
+          Add contacts?
+        </button>
+      </form>
+      <CSSTransition
+        in={state.alert}
+        classNames="alert"
+        onEntered={() =>
+          setState((prevState) => ({ ...prevState, alert: false }))
+        }
+        timeout={3000}
+        unmountOnExit
+      >
+        <Alert message={state.alertMessage} />
+      </CSSTransition>
+    </>
   );
 };
 
 export default Phonebook;
-
-Phonebook.propTypes = {
-  setShowAlert: PropTypes.func.isRequired,
-};
